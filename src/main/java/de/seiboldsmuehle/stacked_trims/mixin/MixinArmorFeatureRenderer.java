@@ -2,7 +2,15 @@ package de.seiboldsmuehle.stacked_trims.mixin;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.DataResult;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.TexturedRenderLayers;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.nbt.NbtCompound;
@@ -24,13 +32,8 @@ public class MixinArmorFeatureRenderer {
     @Redirect(method="renderArmor", at = @At(value="INVOKE", target = "Lnet/minecraft/item/trim/ArmorTrim;getTrim(Lnet/minecraft/registry/DynamicRegistryManager;Lnet/minecraft/item/ItemStack;)Ljava/util/Optional;"))
     public Optional<ArmorTrim> getTrim(DynamicRegistryManager registryManager, ItemStack stack) {
         if (stack.isIn(ItemTags.TRIMMABLE_ARMOR) && stack.getNbt() != null && stack.getNbt().contains("Trim")) {
-
-            NbtCompound nbtCompound = stack.getNbt().getCompound("Trim");
             NbtList nbtList = stack.getNbt().getList("Trim",10);
-
-            nbtList.get(0);
-
-            DataResult var10000 = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtCompound);
+            DataResult var10000 = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtList.get(0));
             ArmorTrim armorTrim = (ArmorTrim)var10000.result().orElse((Object)null);
             return Optional.ofNullable(armorTrim);
         } else {
