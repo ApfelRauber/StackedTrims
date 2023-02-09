@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.seiboldsmuehle.stacked_trims.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinSmithingTrimRecipe",
+    "MixinArmorFeatureRenderer"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
