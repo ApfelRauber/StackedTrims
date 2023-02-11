@@ -6,11 +6,11 @@
   "name": "Stacked Trims",
   "description": "This is a mod making it possible to stack armor trims!",
   "authors": [
-    "ApfelRauner"
+    "ApfelRauber"
   ],
   "contact": {
     "homepage": "seiboldsmuehle.de",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/ApfelRauber/StackedTrims"
   },
 
   "license": "CC0-1.0",
