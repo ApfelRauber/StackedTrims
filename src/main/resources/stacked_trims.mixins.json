@@ -5,10 +5,11 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "MixinSmithingTrimRecipe",
-    "MixinArmorFeatureRenderer"
+    "MixinAnvilScreenHandler"
   ],
   "client": [
-    "MixinArmorTrim"
+    "MixinArmorTrim",
+    "MixinArmorFeatureRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
