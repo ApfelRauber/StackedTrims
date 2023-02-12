@@ -41,6 +41,7 @@ public class MixinArmorTrim {
         }
     }
 
+
     //replace append Tooltip
     private static final Text UPGRADE_TEXT;
     /**

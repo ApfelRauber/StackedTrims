@@ -22,6 +22,7 @@ public abstract class MixinAnvilScreenHandler extends ForgingScreenHandler {
         super(type, syncId, playerInventory, context);
     }
 
+
     @Inject(method = "updateResult", at = @At(value="INVOKE",target="Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void inject(CallbackInfo ci, ItemStack itemStack, int i, int j, int k, ItemStack itemStack2, ItemStack itemStack3, Map map){
         if(itemStack2.isDamageable() && !itemStack2.getNbt().getList("Trim",10).isEmpty() && itemStack3.isOf(Items.FLINT)){

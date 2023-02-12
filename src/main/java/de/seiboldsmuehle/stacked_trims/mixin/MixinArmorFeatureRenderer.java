@@ -51,6 +51,7 @@ public abstract class MixinArmorFeatureRenderer<T extends LivingEntity, M extend
                 }
             });
         }
+
         ci.cancel();
     }
 }

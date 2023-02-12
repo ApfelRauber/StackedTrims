@@ -12,6 +12,7 @@ import net.minecraft.registry.tag.ItemTags;
 import java.util.Optional;
 
 public class ArmorTrimArray {
+
     public static Optional<ArmorTrim[]> getTrim(DynamicRegistryManager registryManager, ItemStack stack) {
         if (stack.isIn(ItemTags.TRIMMABLE_ARMOR) && stack.getNbt() != null && stack.getNbt().contains("Trim") && stack.getNbt().getList("Trim",10).size() >= 1) {
             NbtList nbtList = stack.getNbt().getList("Trim",10);

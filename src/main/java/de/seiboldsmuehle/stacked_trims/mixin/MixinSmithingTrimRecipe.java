@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(SmithingTrimRecipe.class)
 public class MixinSmithingTrimRecipe {
+
     @Redirect(method="craft", at = @At(value="INVOKE", target = "Lnet/minecraft/item/trim/ArmorTrim;apply(Lnet/minecraft/registry/DynamicRegistryManager;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/trim/ArmorTrim;)Z"))
     public boolean apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim) {
         if (stack.isIn(ItemTags.TRIMMABLE_ARMOR)) {
