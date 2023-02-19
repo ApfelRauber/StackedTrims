@@ -33,7 +33,7 @@ public class MixinSmithingTrimRecipe {
                 stack.getOrCreateNbt().put("Trim",nbtList);
                 return true;
             }
-            return false;
-        } else {return false;}
+        }
+        return false;
     }
 }
