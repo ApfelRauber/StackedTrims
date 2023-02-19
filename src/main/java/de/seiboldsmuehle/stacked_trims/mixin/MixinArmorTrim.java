@@ -27,7 +27,7 @@ public class MixinArmorTrim {
     //replace get Trim
     /**
      * @author ApfelRauber
-     * @reason I found no other way to give the Item Renderer and Model Renderer different getTrim methods, then Mixin Injecting the Model Renderer with a full custom getTrimArray method, and Overwriting the normal getTrim method, to fix Code that tries using getTrim without expecting an Array in return.
+     * @reason I found no other way to give the Item Renderer and Model Renderer different getTrim methods, than Mixin Injecting the Model Renderer with a full custom getTrimArray method, and Overwriting the normal getTrim method, to fix Code that tries using getTrim without expecting an Array in return.
      */
     @Overwrite
     public static Optional<ArmorTrim> getTrim(DynamicRegistryManager registryManager, ItemStack stack) {
