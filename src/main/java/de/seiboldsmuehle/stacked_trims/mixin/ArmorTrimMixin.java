@@ -11,6 +11,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryOps;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -93,8 +94,8 @@ public abstract class ArmorTrimMixin {
             if (armorTrim == null) continue;
 
             tooltip.add(UPGRADE_TEXT);
-            tooltip.add(armorTrim.getPattern().value().getDescription(armorTrim.getMaterial()));
-            tooltip.add(armorTrim.getMaterial().value().description());
+            tooltip.add(ScreenTexts.space().append(armorTrim.getPattern().value().getDescription(armorTrim.getMaterial())));
+            tooltip.add(ScreenTexts.space().append(armorTrim.getMaterial().value().description()));
         }
     }
 }
