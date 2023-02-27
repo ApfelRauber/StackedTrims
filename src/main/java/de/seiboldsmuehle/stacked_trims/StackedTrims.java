@@ -3,7 +3,8 @@ package de.seiboldsmuehle.stacked_trims;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
-public class stackedtrims implements ModInitializer {
+public class StackedTrims implements ModInitializer {
+
     @Override
     public void onInitialize() {
         GameRules.setupGamerules();

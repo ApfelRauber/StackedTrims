@@ -4,10 +4,9 @@
   "package": "de.seiboldsmuehle.stacked_trims.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinSmithingTrimRecipe",
-    "MixinAnvilScreenHandler",
-    "MixinArmorTrim",
-    "MixinArmorFeatureRenderer"
+    "AnvilScreenHandlerMixin",
+    "ArmorFeatureRendererMixin",
+    "ArmorTrimMixin"
   ],
   "injectors": {
     "defaultRequire": 1
