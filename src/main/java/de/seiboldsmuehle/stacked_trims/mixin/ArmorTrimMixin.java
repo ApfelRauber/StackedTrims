@@ -46,6 +46,12 @@ public abstract class ArmorTrimMixin {
         }
 
         NbtList nbtList = nbt.getList("Trim", 10);
+        if(nbtList.isEmpty()) {
+            NbtElement preStacked = nbt.get("Trim");
+            if(preStacked != null) {
+                nbtList.add(preStacked);
+            }
+        }
         if (nbtList.size() >= limit) {
             cir.setReturnValue(false);
             return;
@@ -60,7 +66,14 @@ public abstract class ArmorTrimMixin {
     private static void getFirstTrim(DynamicRegistryManager registryManager, ItemStack stack, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
         assert stack.getNbt() != null;
         NbtList nbtList = stack.getNbt().getList("Trim", 10); // key "Trim" is already checked by the original method
-        DataResult<ArmorTrim> result = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtList.get(0));
+        NbtElement nbtElement;
+        if (nbtList.isEmpty()) nbtElement = stack.getNbt().get("Trim");
+        else nbtElement = nbtList.get(0);
+        if(nbtElement == null) {
+            cir.setReturnValue(Optional.empty());
+            return;
+        }
+        DataResult<ArmorTrim> result = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtElement);
         cir.setReturnValue(result.result());
     }
 
