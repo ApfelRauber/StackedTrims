@@ -25,8 +25,7 @@ import java.util.Optional;
 
 @Mixin(ArmorTrim.class)
 public abstract class ArmorTrimMixin {
-    @Shadow
-    @Final
+    @Final @Shadow
     private static Text UPGRADE_TEXT;
 
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
