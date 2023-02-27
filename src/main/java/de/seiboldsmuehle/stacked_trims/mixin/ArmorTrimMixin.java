@@ -13,9 +13,7 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryOps;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,9 +24,6 @@ import java.util.Optional;
 
 @Mixin(ArmorTrim.class)
 public abstract class ArmorTrimMixin {
-    @Final @Shadow
-    private static Text UPGRADE_TEXT;
-
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
         int limit = ServerTickListener.currentServer.getGameRules().get(GameRules.MAX_TRIM_STACK).get();
@@ -93,7 +88,6 @@ public abstract class ArmorTrimMixin {
             ArmorTrim armorTrim = result.result().orElse(null);
             if (armorTrim == null) continue;
 
-            tooltip.add(UPGRADE_TEXT);
             tooltip.add(ScreenTexts.space().append(armorTrim.getPattern().value().getDescription(armorTrim.getMaterial())));
             tooltip.add(ScreenTexts.space().append(armorTrim.getMaterial().value().description()));
         }
