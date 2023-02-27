@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "de.seiboldsmuehle.stacked_trims.stackedtrims"
+      "de.seiboldsmuehle.stacked_trims.StackedTrims"
     ]
   },
   "mixins": [
