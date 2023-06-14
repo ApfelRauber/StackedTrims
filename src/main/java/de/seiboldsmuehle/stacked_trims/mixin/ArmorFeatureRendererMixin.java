@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -29,25 +30,24 @@ public abstract class ArmorFeatureRendererMixin<T extends LivingEntity, M extend
     @Shadow @Mutable @Final
     private final SpriteAtlasTexture armorTrimsAtlas;
 
+    @Shadow protected abstract void renderTrim(ArmorMaterial material, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim, A model, boolean leggings);
+
+    @Shadow protected abstract void renderGlint(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, A model);
+
     protected ArmorFeatureRendererMixin(FeatureRendererContext<T, M> context, SpriteAtlasTexture armorTrimsAtlas) {
         super(context);
         this.armorTrimsAtlas = armorTrimsAtlas;
     }
 
-    @Shadow
-    private void renderTrim(ArmorMaterial armorMaterial, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, ArmorTrim armorTrim, boolean bl, A bipedEntityModel, boolean bl2, float f, float g, float h) {
-        // unreachable
-    }
-
-    @Inject(method = "renderArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEnabledFeatures()Lnet/minecraft/resource/featuretoggle/FeatureSet;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void mixinRenderTrim(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model, CallbackInfo ci, ItemStack itemStack, ArmorItem armorItem, boolean bl, boolean bl2) {
-        if (entity.world.getEnabledFeatures().contains(FeatureFlags.UPDATE_1_20)) {
-            ArmorTrimList.getTrims(entity.world.getRegistryManager(), itemStack).ifPresent((armorTrims) -> {
-                for (ArmorTrim armorTrim : armorTrims) {
-                    renderTrim(armorItem.getMaterial(), matrices, vertexConsumers, light, armorTrim, bl2, model, bl, 1.0F, 1.0F, 1.0F);
-                }
-            });
+    @Inject(method = "renderArmor", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/trim/ArmorTrim;getTrim(Lnet/minecraft/registry/DynamicRegistryManager;Lnet/minecraft/item/ItemStack;)Ljava/util/Optional;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    private void mixinRenderTrim(MatrixStack matrices, VertexConsumerProvider vertexConsumers, T entity, EquipmentSlot armorSlot, int light, A model, CallbackInfo ci, ItemStack itemStack, ArmorItem armorItem, boolean bl) {
+        ArmorTrimList.getTrims(entity.getWorld().getRegistryManager(), itemStack).ifPresent((armorTrims) -> {
+            for (ArmorTrim armorTrim : armorTrims) {
+                renderTrim(armorItem.getMaterial(), matrices, vertexConsumers, light, armorTrim, model, bl);
+            }
+        });
+        if (itemStack.hasGlint()) {
+            renderGlint(matrices, vertexConsumers, light, model);
         }
-        ci.cancel();
     }
 }
