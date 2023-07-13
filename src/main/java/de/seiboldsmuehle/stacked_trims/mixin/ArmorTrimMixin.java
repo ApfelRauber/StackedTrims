@@ -13,9 +13,14 @@ import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryOps;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -24,6 +29,8 @@ import java.util.Optional;
 
 @Mixin(ArmorTrim.class)
 public abstract class ArmorTrimMixin {
+    private static final Text UPGRADE_TEXT;
+
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
         int limit = ServerTickListener.currentServer.getGameRules().get(GameRules.MAX_TRIM_STACK).get();
@@ -73,17 +80,21 @@ public abstract class ArmorTrimMixin {
         cir.setReturnValue(result.result());
     }
 
-    @Inject(method = "appendTooltip", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", ordinal = 2, shift = At.Shift.AFTER))
+    @Inject(method = "appendTooltip", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.BEFORE), cancellable = true)
     private static void appendAdditionalTooltips(ItemStack stack, DynamicRegistryManager registryManager, List<Text> tooltip, CallbackInfo ci) {
         assert stack.getNbt() != null;
         NbtList nbtList = stack.getNbt().getList("Trim", 10);
-        boolean skipFirst = true;
-        for (NbtElement nbtElement : nbtList) {
-            if (skipFirst) {
-                skipFirst = false;
-                continue;
-            }
+        if(nbtList == null || nbtList.size() < 1) return;
 
+        for (NbtElement nbtElement : nbtList) {
+            DataResult<ArmorTrim> result = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtElement);
+            ArmorTrim armorTrim = result.result().orElse(null);
+            if (armorTrim == null) continue;
+            tooltip.add(UPGRADE_TEXT);
+            break;
+        }
+
+        for (NbtElement nbtElement : nbtList) {
             DataResult<ArmorTrim> result = ArmorTrim.CODEC.parse(RegistryOps.of(NbtOps.INSTANCE, registryManager), nbtElement);
             ArmorTrim armorTrim = result.result().orElse(null);
             if (armorTrim == null) continue;
@@ -91,5 +102,10 @@ public abstract class ArmorTrimMixin {
             tooltip.add(ScreenTexts.space().append(armorTrim.getPattern().value().getDescription(armorTrim.getMaterial())));
             tooltip.add(ScreenTexts.space().append(armorTrim.getMaterial().value().description()));
         }
+        ci.cancel();
+    }
+
+    static {
+        UPGRADE_TEXT = Text.translatable(Util.createTranslationKey("item", new Identifier("smithing_template.upgrade"))).formatted(Formatting.GRAY);
     }
 }

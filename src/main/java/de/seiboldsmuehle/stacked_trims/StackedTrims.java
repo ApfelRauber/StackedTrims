@@ -8,6 +8,6 @@ public class StackedTrims implements ModInitializer {
     @Override
     public void onInitialize() {
         GameRules.setupGamerules();
-        ServerTickEvents.END_SERVER_TICK.register(new ServerTickListener());
+        ServerTickEvents.START_SERVER_TICK.register(new ServerTickListener());
     }
 }
