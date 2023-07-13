@@ -1,4 +1,4 @@
-package de.seiboldsmuehle.stacked_trims;
+package io.github.apfelrauber.stacked_trims;
 
 import com.mojang.serialization.DataResult;
 import net.minecraft.item.ItemStack;

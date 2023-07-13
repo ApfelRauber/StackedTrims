@@ -1,4 +1,4 @@
-package de.seiboldsmuehle.stacked_trims;
+package io.github.apfelrauber.stacked_trims;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;

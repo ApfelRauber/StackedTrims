@@ -1,8 +1,8 @@
-package de.seiboldsmuehle.stacked_trims.mixin;
+package io.github.apfelrauber.stacked_trims.mixin;
 
 import com.mojang.serialization.DataResult;
-import de.seiboldsmuehle.stacked_trims.GameRules;
-import de.seiboldsmuehle.stacked_trims.ServerTickListener;
+import io.github.apfelrauber.stacked_trims.GameRules;
+import io.github.apfelrauber.stacked_trims.StackedTrimsMain;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.nbt.NbtCompound;
@@ -17,10 +17,8 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -33,7 +31,8 @@ public abstract class ArmorTrimMixin {
 
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
-        int limit = ServerTickListener.currentServer.getGameRules().get(GameRules.MAX_TRIM_STACK).get();
+        int limit = StackedTrimsMain.currentServer.getGameRules().getInt(GameRules.MAX_TRIM_STACK);
+
         if (limit == 0) {
             cir.setReturnValue(false);
             return;

@@ -6,10 +6,11 @@
   "name": "Stacked Trims",
   "description": "This is a mod making it possible to stack armor trims!",
   "authors": [
-    "ApfelRauber"
+    "ApfelRauber",
+    "Benjamin-Norton"
   ],
   "contact": {
-    "homepage": "seiboldsmuehle.de",
+    "homepage": "https://github.com/ApfelRauber/StackedTrims",
     "sources": "https://github.com/ApfelRauber/StackedTrims"
   },
 
@@ -19,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "de.seiboldsmuehle.stacked_trims.StackedTrims"
+      "io.github.apfelrauber.stacked_trims.StackedTrimsMain"
     ]
   },
   "mixins": [
