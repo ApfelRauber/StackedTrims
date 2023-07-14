@@ -1,7 +1,7 @@
 package io.github.apfelrauber.stacked_trims.mixin;
 
 import com.mojang.serialization.DataResult;
-import io.github.apfelrauber.stacked_trims.GameRules;
+import io.github.apfelrauber.stacked_trims.StackedTrimGameRules;
 import io.github.apfelrauber.stacked_trims.StackedTrimsMain;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
@@ -31,7 +31,7 @@ public abstract class ArmorTrimMixin {
 
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
-        int limit = StackedTrimsMain.currentServer.getGameRules().getInt(GameRules.MAX_TRIM_STACK);
+        int limit = StackedTrimsMain.currentGameRules.getInt(StackedTrimGameRules.MAX_TRIM_STACK);
 
         if (limit == 0) {
             cir.setReturnValue(false);

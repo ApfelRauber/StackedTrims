@@ -1,19 +1,16 @@
 package io.github.apfelrauber.stacked_trims;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.GameRules;
 
 public class StackedTrimsMain implements ModInitializer {
-    public static MinecraftServer currentServer;
+    public static GameRules currentGameRules;
     @Override
     public void onInitialize() {
-        GameRules.setupGamerules();
-        ServerTickEvents.END_SERVER_TICK.register(new ServerTickListener());// -> minecraftServer.getGameRules();
-        //ClientTickEvents.START_CLIENT_TICK.register(new ClientTickListener()); -> MinecraftClient.getInstance().world.getGameRules();
+        StackedTrimGameRules.setupGamerules();
     }
 
-    public static void onServerTick(MinecraftServer server){
-        currentServer = server;
+    public static void setGameRules(GameRules gameRules){
+        currentGameRules = gameRules;
     }
 }

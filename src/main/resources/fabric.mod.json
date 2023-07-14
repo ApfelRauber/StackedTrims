@@ -21,6 +21,12 @@
   "entrypoints": {
     "main": [
       "io.github.apfelrauber.stacked_trims.StackedTrimsMain"
+    ],
+    "server": [
+      "io.github.apfelrauber.stacked_trims.initializers.StackedTrimsServerInitializer"
+    ],
+    "client": [
+      "io.github.apfelrauber.stacked_trims.initializers.StackedTrimsClientInitializer"
     ]
   },
   "mixins": [

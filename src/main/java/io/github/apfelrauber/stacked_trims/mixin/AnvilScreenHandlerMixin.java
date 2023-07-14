@@ -1,6 +1,5 @@
 package io.github.apfelrauber.stacked_trims.mixin;
 
-import io.github.apfelrauber.stacked_trims.GameRules;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
