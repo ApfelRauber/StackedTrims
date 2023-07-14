@@ -31,6 +31,11 @@ public abstract class ArmorTrimMixin {
 
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
+        if (StackedTrimsMain.currentGameRules == null) {
+            cir.setReturnValue(false);
+            return;
+        }
+
         int limit = StackedTrimsMain.currentGameRules.getInt(StackedTrimGameRules.MAX_TRIM_STACK);
 
         if (limit == 0) {

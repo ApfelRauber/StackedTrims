@@ -41,6 +41,14 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
         itemStack3.getNbt().getList("Trim", 10).clear();
         itemStack3.getNbt().remove("Trim");
+
+        if (itemStack1.getNbt().getList("Trim",10).size() > itemStack2.getCount()) {
+            this.output.setStack(0, ItemStack.EMPTY);
+            this.sendContentUpdates();
+            ci.cancel();
+            return;
+        }
+
         this.output.setStack(0, itemStack3);
         this.sendContentUpdates();
         ci.cancel();
@@ -76,9 +84,16 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack itemStack1 = this.input.getStack(0);
         ItemStack itemStack2 = this.input.getStack(1);
 
-        if(itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
+        if (itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
         if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trim",10) == null) return;
 
-        cir.setReturnValue(true);
+        if (itemStack1.getNbt().getList("Trim",10).size() > itemStack2.getCount()) {
+            cir.setReturnValue(false);
+            cir.cancel();
+        }
+        else {
+            cir.setReturnValue(true);
+            cir.cancel();
+        }
     }
 }
