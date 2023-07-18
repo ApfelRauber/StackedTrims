@@ -14,19 +14,19 @@
     "sources": "https://github.com/ApfelRauber/StackedTrims"
   },
 
-  "license": "https://www.curseforge.com/project/827569/license",
+  "license": "https://github.com/ApfelRauber/StackedTrims/blob/master/LICENSE",
   "icon": "assets/stacked_trims/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.apfelrauber.stacked_trims.StackedTrimsMain"
+      "io.github.apfelrauber.stacked_trims.StackedTrims"
     ],
     "server": [
-      "io.github.apfelrauber.stacked_trims.initializers.StackedTrimsServerInitializer"
+      "io.github.apfelrauber.stacked_trims.sidedgamerulegetter.ServerGameRulesGetter"
     ],
     "client": [
-      "io.github.apfelrauber.stacked_trims.initializers.StackedTrimsClientInitializer"
+      "io.github.apfelrauber.stacked_trims.sidedgamerulegetter.ClientGameRulesGetter"
     ]
   },
   "mixins": [

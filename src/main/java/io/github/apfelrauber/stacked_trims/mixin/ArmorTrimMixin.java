@@ -2,7 +2,7 @@ package io.github.apfelrauber.stacked_trims.mixin;
 
 import com.mojang.serialization.DataResult;
 import io.github.apfelrauber.stacked_trims.StackedTrimGameRules;
-import io.github.apfelrauber.stacked_trims.StackedTrimsMain;
+import io.github.apfelrauber.stacked_trims.StackedTrims;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.trim.ArmorTrim;
 import net.minecraft.nbt.NbtCompound;
@@ -31,12 +31,12 @@ public abstract class ArmorTrimMixin {
 
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getOrCreateNbt()Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
     private static void apply(DynamicRegistryManager registryManager, ItemStack stack, ArmorTrim trim, CallbackInfoReturnable<Boolean> cir) {
-        if (StackedTrimsMain.currentGameRules == null) {
+        if (StackedTrims.currentGameRules == null) {
             cir.setReturnValue(false);
             return;
         }
 
-        int limit = StackedTrimsMain.currentGameRules.getInt(StackedTrimGameRules.MAX_TRIM_STACK);
+        int limit = StackedTrims.currentGameRules.getInt(StackedTrimGameRules.MAX_TRIM_STACK);
 
         if (limit == 0) {
             cir.setReturnValue(false);
@@ -86,6 +86,7 @@ public abstract class ArmorTrimMixin {
 
     @Inject(method = "appendTooltip", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.BEFORE), cancellable = true)
     private static void appendAdditionalTooltips(ItemStack stack, DynamicRegistryManager registryManager, List<Text> tooltip, CallbackInfo ci) {
+        if(StackedTrims.isBetterTrimTooltipsEnables) return; // If BetterTrimTooltips is installed it will handle the tooltip generation instead.
         assert stack.getNbt() != null;
         NbtList nbtList = stack.getNbt().getList("Trim", 10);
         if(nbtList == null || nbtList.size() < 1) return;
