@@ -70,7 +70,7 @@ public abstract class ArmorTrimMixin {
     }
 
     @Inject(method = "getTrim", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getSubNbt(Ljava/lang/String;)Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
-    private static void getFirstTrim(DynamicRegistryManager registryManager, ItemStack stack, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
+    private static void getFirstTrim(DynamicRegistryManager registryManager, ItemStack stack, boolean suppressError, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
         assert stack.getNbt() != null;
         NbtList nbtList = stack.getNbt().getList("Trim", 10); // key "Trim" is already checked by the original method
         NbtElement nbtElement;

@@ -12,6 +12,7 @@ import net.minecraft.registry.RegistryOps;
 import net.minecraft.registry.tag.ItemTags;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,7 @@ public class ArmorTrimList {
             result.result().ifPresent(armorTrims::add);
         }
 
+        Collections.reverse(armorTrims);
         return Optional.of(armorTrims);
     }
 }

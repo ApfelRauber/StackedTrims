@@ -33,6 +33,8 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack itemStack1 = this.input.getStack(0);
         ItemStack itemStack2 = this.input.getStack(1);
         ItemStack itemStack3 = itemStack1.copy();
+        this.output.setStack(0, ItemStack.EMPTY);
+
 
         if(itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
         if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trim",10) == null) return;
@@ -40,17 +42,25 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         NbtCompound nbtCompound = itemStack1.getNbt();
         if (nbtCompound == null || nbtCompound.getList("Trim", 10).isEmpty()) return;
 
-        itemStack3.getNbt().getList("Trim", 10).clear();
-        itemStack3.getNbt().remove("Trim");
 
-        if (itemStack1.getNbt().getList("Trim",10).size() > itemStack2.getCount()) {
+        if (itemStack2.getCount() <= 0) {
             this.output.setStack(0, ItemStack.EMPTY);
-            this.sendContentUpdates();
-            ci.cancel();
-            return;
         }
 
-        this.output.setStack(0, itemStack3);
+        if(itemStack2.getCount() >= itemStack1.getNbt().getList("Trim", 10).size() && itemStack2.getCount() >= 1) {
+            itemStack3.getNbt().getList("Trim", 10).clear();
+            itemStack3.getNbt().remove("Trim");
+            this.output.setStack(0, itemStack3);
+        }
+
+        if(itemStack2.getCount() < itemStack1.getNbt().getList("Trim", 10).size() && itemStack2.getCount() >= 1) {
+            int oldTrimListSize = itemStack1.getNbt().getList("Trim", 10).size();
+            for(int i = oldTrimListSize-1; i > oldTrimListSize-itemStack2.getCount()-1; i--){
+                itemStack3.getNbt().getList("Trim", 10).remove(i);
+            }
+            this.output.setStack(0, itemStack3);
+        }
+
         this.sendContentUpdates();
         ci.cancel();
     }
@@ -88,11 +98,10 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         if (itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
         if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trim",10) == null) return;
 
-        if (itemStack1.getNbt().getList("Trim",10).size() > itemStack2.getCount()) {
+        if (itemStack2.getCount() <= 0) {
             cir.setReturnValue(false);
             cir.cancel();
-        }
-        else {
+        } else {
             cir.setReturnValue(true);
             cir.cancel();
         }
