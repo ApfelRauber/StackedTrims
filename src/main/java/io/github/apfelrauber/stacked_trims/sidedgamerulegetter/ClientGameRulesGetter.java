@@ -8,11 +8,8 @@ import net.minecraft.client.MinecraftClient;
 public class ClientGameRulesGetter implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        ClientTickEvents.END_CLIENT_TICK.register(new ClientTickEvents.EndTick() {
-            @Override
-            public void onEndTick(MinecraftClient client) {
-                if(client.world != null) StackedTrims.setGameRules(client.world.getGameRules());
-            }
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if(client.world != null) StackedTrims.setGameRules(client.world.getGameRules());
         });
     }
 }
