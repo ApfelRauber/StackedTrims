@@ -22,9 +22,9 @@ public class ArmorTrimList {
         if (!stack.isIn(ItemTags.TRIMMABLE_ARMOR)) return Optional.empty();
 
         NbtCompound nbt = stack.getNbt();
-        if (nbt == null || !nbt.contains("Trim")) return Optional.empty();
+        if (nbt == null || !nbt.contains("Trims")) return Optional.empty();
 
-        NbtList nbtList = nbt.getList("Trim", 10);
+        NbtList nbtList = nbt.getList("Trims", 10);
         if (nbtList.isEmpty()) return Optional.empty();
 
         List<ArmorTrim> armorTrims = new ArrayList<>(nbtList.size());
