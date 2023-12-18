@@ -27,7 +27,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     protected AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(type, syncId, playerInventory, context);
     }
-
+//TODO: update code to work with Trim and Trims
     @Inject(method = "updateResult", at = @At("HEAD"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void injectUpdateResult(CallbackInfo ci) {
         ItemStack itemStack1 = this.input.getStack(0);
@@ -37,27 +37,31 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
 
         if(itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
-        if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trim",10) == null) return;
+        if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trims",10) == null) return;
 
         NbtCompound nbtCompound = itemStack1.getNbt();
-        if (nbtCompound == null || nbtCompound.getList("Trim", 10).isEmpty()) return;
+        if (nbtCompound == null || nbtCompound.getList("Trims", 10).isEmpty()) return;
 
 
         if (itemStack2.getCount() <= 0) {
             this.output.setStack(0, ItemStack.EMPTY);
         }
 
-        if(itemStack2.getCount() >= itemStack1.getNbt().getList("Trim", 10).size() && itemStack2.getCount() >= 1) {
-            itemStack3.getNbt().getList("Trim", 10).clear();
+        if(itemStack2.getCount() >= itemStack1.getNbt().getList("Trims", 10).size() && itemStack2.getCount() >= 1) {
+            assert itemStack3.getNbt() != null;
+            itemStack3.getNbt().getList("Trims", 10).clear();
+            itemStack3.getNbt().remove("Trims");
             itemStack3.getNbt().remove("Trim");
             this.output.setStack(0, itemStack3);
         }
 
-        if(itemStack2.getCount() < itemStack1.getNbt().getList("Trim", 10).size() && itemStack2.getCount() >= 1) {
-            int oldTrimListSize = itemStack1.getNbt().getList("Trim", 10).size();
-            for(int i = oldTrimListSize-1; i > oldTrimListSize-itemStack2.getCount()-1; i--){
-                itemStack3.getNbt().getList("Trim", 10).remove(i);
+        if(itemStack2.getCount() < itemStack1.getNbt().getList("Trims", 10).size() && itemStack2.getCount() >= 1) {
+            int oldTrimListSize = itemStack1.getNbt().getList("Trims", 10).size();
+            assert itemStack3.getNbt() != null;
+            if (oldTrimListSize > oldTrimListSize - itemStack2.getCount()) {
+                itemStack3.getNbt().getList("Trims", 10).subList(oldTrimListSize - itemStack2.getCount(), oldTrimListSize).clear();
             }
+            itemStack3.getOrCreateNbt().put("Trim",itemStack3.getNbt().getList("Trims",10).get(itemStack3.getNbt().getList("Trims",10).size() - 1));
             this.output.setStack(0, itemStack3);
         }
 
@@ -67,9 +71,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
     @Inject(method = "onTakeOutput", at = @At("HEAD"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void injectOnTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfo ci){
-        if(!this.input.getStack(1).isOf(Items.FLINT) || this.input.getStack(0).getNbt().getList("Trim",10) == null) return;
+        if(!this.input.getStack(1).isOf(Items.FLINT) || this.input.getStack(0).getNbt().getList("Trims",10) == null) return;
 
-        this.input.getStack(1).decrement(this.input.getStack(0).getNbt().getList("Trim",10).size());
+        this.input.getStack(1).decrement(this.input.getStack(0).getNbt().getList("Trims",10).size());
         this.input.getStack(0).decrement(1);
 
         this.context.run((world, pos) -> {
@@ -96,7 +100,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack itemStack2 = this.input.getStack(1);
 
         if (itemStack1.isEmpty() || itemStack2.isEmpty() || itemStack1.getNbt() == null) return;
-        if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trim",10) == null) return;
+        if (!(itemStack2.isOf(Items.FLINT)) || itemStack1.getNbt().getList("Trims",10) == null) return;
 
         if (itemStack2.getCount() <= 0) {
             cir.setReturnValue(false);
