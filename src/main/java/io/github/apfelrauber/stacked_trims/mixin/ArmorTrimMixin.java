@@ -1,6 +1,5 @@
 package io.github.apfelrauber.stacked_trims.mixin;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -16,13 +15,11 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryOps;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
-import net.minecraft.util.dynamic.Codecs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -95,7 +92,7 @@ public abstract class ArmorTrimMixin {
     }
 
     @Inject(method = "getTrim", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getSubNbt(Ljava/lang/String;)Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
-    private static void getFirstTrim(DynamicRegistryManager registryManager, ItemStack stack, boolean suppressError, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
+    private static void getLastTrim(DynamicRegistryManager registryManager, ItemStack stack, boolean suppressError, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
         assert stack.getNbt() != null;
         if(!stack.getNbt().contains("Trims")) {
             cir.setReturnValue(Optional.empty());
@@ -104,8 +101,8 @@ public abstract class ArmorTrimMixin {
 
         NbtList nbtList = stack.getNbt().getList("Trims", 10);
         NbtElement nbtElement;
-        if (nbtList.isEmpty()) nbtElement = stack.getNbt().get("Trims");
-        else nbtElement = nbtList.get(0);
+        if (nbtList.isEmpty()) nbtElement = stack.getNbt().get("Trim");
+        else nbtElement = nbtList.get(nbtList.size()-1);
         if(nbtElement == null) {
             cir.setReturnValue(Optional.empty());
             return;
