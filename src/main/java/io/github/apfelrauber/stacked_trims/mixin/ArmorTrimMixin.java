@@ -92,7 +92,7 @@ public abstract class ArmorTrimMixin {
     }
 
     @Inject(method = "getTrim", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getSubNbt(Ljava/lang/String;)Lnet/minecraft/nbt/NbtCompound;"), cancellable = true)
-    private static void getLastTrim(DynamicRegistryManager registryManager, ItemStack stack, boolean suppressError, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
+    private static void getLastTrim(DynamicRegistryManager registryManager, ItemStack stack, CallbackInfoReturnable<Optional<ArmorTrim>> cir) {
         assert stack.getNbt() != null;
         if(!stack.getNbt().contains("Trims")) {
             cir.setReturnValue(Optional.empty());

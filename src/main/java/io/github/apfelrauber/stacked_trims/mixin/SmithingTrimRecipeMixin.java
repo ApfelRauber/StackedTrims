@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Mixin(SmithingTrimRecipe.class)
 public class SmithingTrimRecipeMixin {
-    @Inject(method = "craft", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/trim/ArmorTrim;getTrim(Lnet/minecraft/registry/DynamicRegistryManager;Lnet/minecraft/item/ItemStack;Z)Ljava/util/Optional;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+    @Inject(method = "craft", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/trim/ArmorTrim;getTrim(Lnet/minecraft/registry/DynamicRegistryManager;Lnet/minecraft/item/ItemStack;)Ljava/util/Optional;"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     public void allowDuplicateTrims(Inventory inventory, DynamicRegistryManager registryManager, CallbackInfoReturnable<ItemStack> cir, ItemStack itemStack, Optional optional, Optional optional2){
         if(!StackedTrims.currentGameRules.getBoolean(StackedTrimGameRules.ALLOW_DUPLICATE_TRIMS)) return;
 
