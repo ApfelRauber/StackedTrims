@@ -32,14 +32,14 @@
   "mixins": [
     "stacked_trims.mixins.json"
   ],
-
+  
   "depends": {
     "fabricloader": ">=0.14.21",
     "fabric-api": "*",
     "minecraft": ">=1.20",
     "java": ">=17"
   },
-  "suggests": {
-    "another-mod": "*"
+  "conflicts": {
+    "immediatelyfast" : "*"
   }
 }
