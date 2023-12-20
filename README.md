@@ -17,7 +17,7 @@
 ### FAQ:
 + **Forge or Fabric?** This mod is for fabric.
 + **Forge Version?** Maybe Coming Soon
-+ **Client or Server?** It is possible for Vanilla clients to join a server with this mod, no armor trims will render though. -> Needs to be on both for it to work.
++ **Client or Server?** It is possible for Vanilla clients to join a server with this mod, only the newset armor trim will render though. -> Needs to be on both for it to work.
 + **Modpack?** You can use it in any modpack, credit me if possible.
 + **Curse Forge?** [Here](https://legacy.curseforge.com/minecraft/mc-mods/stacked-armor-trims)
 + **Is this mod compatible with x?** I don't know, haven't tested it. I will add a list of incompatible mods if any problems come to my attention.
