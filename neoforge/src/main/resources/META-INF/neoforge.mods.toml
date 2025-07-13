@@ -7,7 +7,7 @@ license = "All Right"
 modId = "stacked_trims"
 version = "${version}"
 displayName = "Stacked Trims"
-authors = "Flechazo"
+authors = "Flechazo, ApfelRauber, Benjamin-Norton"
 description = '''
 The high version port of Netherite Plus Mod
 Add more netherite items into game.
