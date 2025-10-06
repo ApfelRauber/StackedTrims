@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "stacked_trims",
+  "version": "${version}",
+
+  "name": "Stacked Trims",
+  "description": "This is a mod making it possible to stack armor trims!",
+  "authors": [
+    "ApfelRauber",
+    "Benjamin-Norton",
+    "Flechazo"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ApfelRauber/StackedTrims",
+    "sources": "https://github.com/ApfelRauber/StackedTrims"
+  },
+
+  "license": "https://github.com/ApfelRauber/StackedTrims/blob/master/LICENSE",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.apfelrauber.stacked_trims.fabric.StackedTrimsFabric"
+    ],
+    "client": [
+      "io.github.apfelrauber.stacked_trims.fabric.client.StackedTrimsFabricClient"
+    ]
+  },
+  "mixins": [
+    "stacked_trims-fabric.mixins.json",
+    "stacked_trims.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "~1.21",
+    "architectury": "*",
+    "fabric-api": "*"
+  },
+  "conflicts": {
+    "immediatelyfast" : "*"
+  }
+}
