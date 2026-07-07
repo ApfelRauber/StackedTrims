@@ -1,4 +1,4 @@
-package net.steveson.solidgoldstairs;
+package io.github.apfelrauber.stacked_trims;
 
 import org.slf4j.Logger;
 
@@ -15,10 +15,10 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(SolidGoldStairsMod.MOD_ID)
-public class SolidGoldStairsMod {
+@Mod(StackedTrimsMod.MOD_ID)
+public class StackedTrimsMod {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "solid_gold_stairs";
+    public static final String MOD_ID = "stacked_armor_trims";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 //    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
@@ -48,7 +48,7 @@ public class SolidGoldStairsMod {
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public SolidGoldStairsMod(IEventBus modEventBus, ModContainer modContainer) {
+    public StackedTrimsMod(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 

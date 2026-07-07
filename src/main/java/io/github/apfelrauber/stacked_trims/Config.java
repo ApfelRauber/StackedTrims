@@ -1,4 +1,4 @@
-package net.steveson.solidgoldstairs;
+package io.github.apfelrauber.stacked_trims;
 
 import java.util.List;
 

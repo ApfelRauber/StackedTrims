@@ -1,4 +1,4 @@
-package net.steveson.solidgoldstairs;
+package io.github.apfelrauber.stacked_trims;
 
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
@@ -11,9 +11,9 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
-@Mod(value = SolidGoldStairsMod.MOD_ID, dist = Dist.CLIENT)
+@Mod(value = StackedTrimsMod.MOD_ID, dist = Dist.CLIENT)
 // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-@EventBusSubscriber(modid = SolidGoldStairsMod.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = StackedTrimsMod.MOD_ID, value = Dist.CLIENT)
 public class ExampleModClient {
     public ExampleModClient(ModContainer container) {
         // Allows NeoForge to create a config screen for this mod's configs.
@@ -25,7 +25,7 @@ public class ExampleModClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
-        SolidGoldStairsMod.LOGGER.info("HELLO FROM CLIENT SETUP");
-        SolidGoldStairsMod.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        StackedTrimsMod.LOGGER.info("HELLO FROM CLIENT SETUP");
+        StackedTrimsMod.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 }
